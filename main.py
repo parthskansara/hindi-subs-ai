@@ -40,13 +40,22 @@ def parse_json_file(file_path):
     except IOError as e:
         print(f"I/O Error: {e}")
 
+def parse_timestamp (timestamp):
+    sec = int(timestamp)
+    ms = int((timestamp - sec) * 1000)
+
+    hrs = sec // 3600
+    mins = (sec % 3600) // 60
+    sec = sec % 60
+    return f"{hrs:02}:{mins:02}:{sec:02},{ms:03}"
+
 def json_to_srt(json_file, srt_file_path):
     json_data = parse_json_file(json_file)    
     with open (srt_file_path, "w") as file:
         for i, segment in enumerate(json_data['segments']):
-            start, end = segment['start'], segment['end']
-            # file.write(f"{i}")
-            file.write(f"00:00:{str(int(start)).replace('.', ',')} --> 00:00:{str(int(end)).replace('.', ',')}\n")
+            start_timestamp, end_timestamp = parse_timestamp(segment['start']), parse_timestamp(segment['end'])
+            file.write(f"{i+1}\n")
+            file.write(f"{start_timestamp} --> {end_timestamp}\n")
             file.write(segment['text'].strip() + '\n\n')
 
 def transcribe_audio_with_timestamps (audio_path):
@@ -83,11 +92,7 @@ def translate_to_hindi (english_file_path):
         with open (english_file_path, "r") as english_file:  
             for line in english_file:
                 translation = EngtoHindi(line.strip())
-                hindi_file.write(translation.convert + "\n\n")
-
-    test = 'During their training, medical residents learn countless techniques, surgeries, and procedures, which they\'ll later use to save lives. Being able to remember these skills can quite literally be a matter of life and death. With this in mind, a 2006 research study took a class of surgical residents learning to suture arteries and split them into two groups.'
-
-    print(EngtoHindi(test).convert)
+                hindi_file.write(translation.convert + "\n")
 
     print(f'Translation saved in {hindi_file_path}')
     return hindi_file_path
