@@ -13,8 +13,8 @@ This project generates subtitle files in Hindi from English videos. It extracts 
  1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/hindi-transcript-generator.git
-cd hindi-transcript-generator
+git clone https://github.com/parthskansara/hindi-subs-ai.git
+cd hindi-subs-ai
 ```
  2. Install the required dependencies:
 
