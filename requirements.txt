@@ -1,0 +1,3 @@
+englisttohindi==4.1.0
+moviepy==2.1.2
+whisper_timestamped==1.15.8
